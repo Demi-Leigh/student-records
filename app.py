@@ -1,6 +1,6 @@
 import sqlite3
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 
 
 def init_sqlite_db():
@@ -44,6 +44,17 @@ def add_new_student_record():
         finally:
             conn.close()
             return render_template('result.html', msg=msg)
+
+
+@app.route('/show-students-data')
+def show_data():
+
+    with sqlite3.connect('database.db') as connection:
+        cur = connection.cursor()
+        cur.execute("SELECT * FROM students")
+
+        results = cur.fetchall()
+    return jsonify(results)
 
 
 if __name__ == "__main__":
