@@ -26,8 +26,7 @@ def enter_new_student():
 
 @app.route('/add-new-record/', methods=["POST"])
 def add_new_student_record():
-    msg = None
-    if request == "POST":
+    if request.method == "POST":
         try:
             name = request.form['name']
             addr = request.form['add']
